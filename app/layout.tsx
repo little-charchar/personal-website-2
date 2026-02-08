@@ -13,8 +13,8 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Charlene | ML Engineer",
-  description: "Machine learning engineer with a love for logistics, systems, and elegant automation.",
+  title: "Charlene Shao",
+  description: "Mechatronics Engineering Student @ UWaterloo",
 };
 
 export default function RootLayout({
