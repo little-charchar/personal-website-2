@@ -120,6 +120,7 @@ export default function Home() {
     }>
   >([]);
   const bunniesRef = useRef<typeof bunnies>([]);
+  const bunnyIdRef = useRef(0);
   const bunnyElsRef = useRef(new Map<number, HTMLImageElement>());
   const bunnySources = useMemo(() => ["/bunny-idle-32.png", "/bunny-click-32.png"], []);
 
@@ -142,6 +143,7 @@ export default function Home() {
         if (!el) return;
         const elapsed = (now - bunny.startAt) / 1000;
         if (elapsed < 0) {
+          el.style.opacity = "0";
           el.style.transform = `translate(0px, 0px) scaleX(${bunny.flip ? -1 : 1})`;
           return;
         }
@@ -170,25 +172,31 @@ export default function Home() {
 
   const handleBunnyBurst = () => {
     const now = performance.now();
-    const hopCount = 6;
-    const radius = (window.innerWidth + 160) / (hopCount * 2);
-    const burst = Array.from({ length: 1 }).map((_, index) => ({
-      id: Math.floor(now) + index,
+    const width = typeof window === "undefined" ? 1200 : window.innerWidth;
+    const radius = 56;
+    const hopWidth = radius * 2;
+    const hopCount = Math.max(3, Math.ceil((width + 200) / hopWidth));
+    const duration = hopCount * 0.55;
+    const burst = Array.from({ length: 1 }).map(() => ({
+      id: (bunnyIdRef.current += 1),
       bottom: 0,
       size: Math.random() * 16 + 24,
-      duration: Math.random() * 1.4 + 3.2,
+      duration,
       flip: Math.random() > 0.5,
       radius,
       hopCount,
-      startAt: now + (Math.random() * 0.25 + 0.05) * 1000,
+      startAt: now + 60,
     }));
 
     updateBunnies((prev) => [...prev, ...burst]);
 
-    const maxDuration = Math.max(...burst.map((item) => item.duration));
-    window.setTimeout(() => {
-      updateBunnies((prev) => prev.filter((item) => item.id < Math.floor(now)));
-    }, (maxDuration + 0.5) * 1000);
+    burst.forEach((item) => {
+      const cleanupDelay = (item.duration + 0.8) * 1000;
+      window.setTimeout(() => {
+        updateBunnies((prev) => prev.filter((bunny) => bunny.id !== item.id));
+        bunnyElsRef.current.delete(item.id);
+      }, cleanupDelay);
+    });
   };
 
   return (
