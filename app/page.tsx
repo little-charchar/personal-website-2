@@ -152,14 +152,16 @@ export default function Home() {
         }
         const totalWidth = bunny.hopCount * 2 * bunny.radius;
         const x = progress * totalWidth;
-        const hopWidth = 2 * bunny.radius;
-        const hopIndex = Math.floor(x / hopWidth);
-        const localX = x - hopIndex * hopWidth;
-        const offset = localX - bunny.radius;
-        const y = -Math.sqrt(Math.max(0, bunny.radius * bunny.radius - offset * offset));
-        el.style.opacity = "1";
-        el.style.transform = `translate(${x}px, ${y}px) scaleX(${bunny.flip ? -1 : 1})`;
-      });
+      const hopWidth = 2 * bunny.radius;
+      const hopIndex = Math.floor(x / hopWidth);
+      const localX = x - hopIndex * hopWidth;
+      const offset = localX - bunny.radius;
+      const y = -Math.sqrt(Math.max(0, bunny.radius * bunny.radius - offset * offset));
+      const hopFlip = hopIndex % 2 === 0 ? 1 : -1;
+      el.style.opacity = "1";
+      const baseFlip = bunny.flip ? -1 : 1;
+      el.style.transform = `translate(${x}px, ${y}px) scaleX(${baseFlip * hopFlip})`;
+    });
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -169,8 +171,8 @@ export default function Home() {
   const handleBunnyBurst = () => {
     const now = performance.now();
     const hopCount = 6;
-    const radius = Math.max(36, Math.min(70, window.innerWidth / (hopCount * 2)));
-    const burst = Array.from({ length: 12 }).map((_, index) => ({
+    const radius = (window.innerWidth + 160) / (hopCount * 2);
+    const burst = Array.from({ length: 1 }).map((_, index) => ({
       id: Math.floor(now) + index,
       bottom: 0,
       size: Math.random() * 16 + 24,
@@ -219,14 +221,14 @@ export default function Home() {
             <h1 className="font-display text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
               Charlene Shao
             </h1>
-            <p className="text-xs uppercase tracking-[0.35em] text-[color:var(--muted)]">
+            <p className="text-sm uppercase tracking-[0.35em] text-[color:var(--muted)]">
               Mechatronics Engineering Student @ UWaterloo
             </p>
           </div>
         </header>
 
         <section id="experience" className="space-y-6">
-          <h2 className="text-lg font-semibold uppercase tracking-[0.35em] text-[color:var(--foreground)]">Experience</h2>
+          <h2 className="text-lg font-bold uppercase tracking-[0.35em] text-[color:var(--foreground)]">Experience</h2>
           <div className="space-y-6">
             {experiences.map((role) => (
               <div key={`${role.company}-${role.role}`} className="space-y-2">
@@ -241,9 +243,7 @@ export default function Home() {
                     </div>
                     <div className="space-y-1">
                       <p className="text-lg font-semibold text-[color:var(--foreground)]">{role.company}</p>
-                    <p className="text-sm text-[color:var(--muted)]">
-                      {role.role} · {role.type}
-                    </p>
+                    <p className="text-sm text-[color:var(--muted)]">{role.role}</p>
                     </div>
                   </div>
                   <p className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
@@ -257,7 +257,7 @@ export default function Home() {
         </section>
 
         <section id="volunteering" className="space-y-6">
-          <h2 className="text-lg font-semibold uppercase tracking-[0.35em] text-[color:var(--foreground)]">
+          <h2 className="text-lg font-bold uppercase tracking-[0.35em] text-[color:var(--foreground)]">
             Volunteering
           </h2>
           <div className="space-y-6">
@@ -294,7 +294,7 @@ export default function Home() {
         </section>
 
         <section id="education" className="space-y-4">
-          <h2 className="text-lg font-semibold uppercase tracking-[0.35em] text-[color:var(--foreground)]">Education</h2>
+          <h2 className="text-lg font-bold uppercase tracking-[0.35em] text-[color:var(--foreground)]">Education</h2>
           <div className="space-y-2">
             <p className="text-lg font-semibold text-[color:var(--foreground)]">{education.school}</p>
             <p className="text-sm text-[color:var(--muted)]">{education.degree}</p>

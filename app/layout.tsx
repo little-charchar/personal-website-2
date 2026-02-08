@@ -15,6 +15,9 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Charlene Shao",
   description: "Mechatronics Engineering Student @ UWaterloo",
+  icons: {
+    icon: "/bunny-idle-32.png",
+  },
 };
 
 export default function RootLayout({

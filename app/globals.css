@@ -4,7 +4,7 @@
   color-scheme: light;
   --background: #ffe9f2;
   --foreground: #2a1b22;
-  --muted: #7a5463;
+  --muted: #5a3a46;
   --accent: #ff7eb3;
   --accent-soft: #ffd6e7;
   --surface: #fff4fa;
@@ -50,24 +50,8 @@ body {
 
 .bunny-burst {
   position: absolute;
-  left: -10vw;
+  left: 0;
   bottom: 0;
   pointer-events: none;
   image-rendering: pixelated;
-  transform: scaleX(var(--bunny-flip, 1));
-  offset-path: path(var(--bunny-path));
-  offset-rotate: 0deg;
-  offset-distance: 0%;
-  animation-name: bunny-hop;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-}
-
-@keyframes bunny-hop {
-  0% {
-    offset-distance: 0%;
-  }
-  100% {
-    offset-distance: 100%;
-  }
 }
