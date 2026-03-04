@@ -27,7 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${manrope.variable} antialiased`}>
+      <body className={`${fraunces.variable} ${manrope.variable} antialiased`}
+            suppressHydrationWarning={true}>
         {children}
       </body>
     </html>

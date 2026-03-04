@@ -191,6 +191,31 @@ export default function Home() {
   const bunnyElsRef = useRef(new Map<number, HTMLImageElement>());
   const bunnySources = useMemo(() => ["/bunny-idle-32.png", "/bunny-click-32.png"], []);
 
+  const [wavingEar, setWavingEar] = useState<'left' | 'right' | null>(null);
+  const [waveProgress, setWaveProgress] = useState(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!wavingEar) return;
+
+      const header = document.querySelector('header');
+      if (!header) return;
+
+      const rect = header.getBoundingClientRect();
+      const relativeY = (e.clientY - rect.top) / rect.height;
+
+      setWaveProgress(Math.max(0, 1 - relativeY * 2));
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [wavingEar]);
+
+  const handleEarInteraction = (ear: 'left' | 'right') => {
+    setWavingEar(ear);
+    setTimeout(() => setWavingEar(null), 1000); // Stop waving after 1s
+  };
+
   const updateBunnies = (
       updater: (prev: typeof bunnies) => typeof bunnies,
   ) => {
@@ -295,13 +320,10 @@ export default function Home() {
         />
 
         <div className="fixed inset-0 z-0 pointer-events-none opacity-5">
-          <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,#ff69b4_2px,#ff69b4_4px)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#ff69b4_1px,transparent_1px)] bg-[length:40px_40px]" />
-        </div>
-
-        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-40 left-20 w-64 h-64 bg-[#ff9ecd] rounded-full mix-blend-overlay filter blur-[128px] opacity-15 animate-float" />
-          <div className="absolute bottom-40 right-20 w-80 h-80 bg-[#ffb3d9] rounded-full mix-blend-overlay filter blur-[128px] opacity-15 animate-float-slow" />
+          <div
+              className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,#ff69b4_2px,#ff69b4_4px)]"/>
+          <div
+              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#ff69b4_1px,transparent_1px)] bg-[length:40px_40px]"/>
         </div>
 
         {hasEntered && (
@@ -337,7 +359,7 @@ export default function Home() {
                 transform: `translateY(${introScrollProgress * -40}px)`
               }}
           >
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 z-10">
               <button
                   type="button"
                   onClick={() => {
@@ -419,6 +441,52 @@ export default function Home() {
                   />
                 </a>
               </div>
+            </div>
+            <div className="relative w-full mt-16"> {/* Added margin-top to push down */}
+              <div
+                  className="absolute left-1/2 -translate-x-1/2 w-160 h-100 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20"
+                  style={{
+                    top: '0',
+                    transform: `translateY(${Math.sin(Date.now() * 0.001) * 5}px)`
+                  }}
+              />
+
+              {/* Left ear */}
+              <div
+                  onClick={() => handleEarInteraction('left')}
+                  onMouseEnter={() => setWavingEar('left')}
+                  onMouseLeave={() => setWavingEar(null)}
+                  className="absolute w-50 h-120 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20 origin-bottom cursor-pointer transition-all"
+                  style={{
+                    left: 'calc(50% - 25%)',
+                    bottom: '1vh',
+                    transform: `
+                      rotate(${wavingEar === 'left' ? -10 - waveProgress * 5 : -10}deg)
+                      translateY(${Math.sin(Date.now() * 0.001 + 1) * 5}px)
+                      scaleX(${wavingEar === 'left' ? 1 + waveProgress * 0.1 : 1})
+                    `,
+                    transition: wavingEar ? 'transform 0.1s' : 'none'
+                  }}
+              />
+
+              {/* Right ear */}
+              <div
+                  onClick={() => handleEarInteraction('right')}
+                  onMouseEnter={() => setWavingEar('right')}
+                  onMouseLeave={() => setWavingEar(null)}
+                  className="absolute w-50 h-120 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20 origin-bottom cursor-pointer transition-all"
+                  style={{
+                    right: 'calc(50% - 25%)',
+                    bottom: '1vh',
+                    transform: `
+                      rotate(${wavingEar === 'right' ? 10 + waveProgress * 5 : 10}deg)
+                      translateY(${Math.cos(Date.now() * 0.001 + 1) * 5}px)
+                      scaleX(${wavingEar === 'right' ? 1 + waveProgress * 0.1 : 1})
+                    `,
+                    transition: wavingEar ? 'transform 0.1s' : 'none'
+                  }}
+              />
+
             </div>
           </header>
 
@@ -599,6 +667,8 @@ export default function Home() {
                                   style={{
                                     objectPosition: image.src.includes("hs") ? "center 70%" : "center"
                                   }}
+                                  loading="eager"
+                                  decoding="sync"
                               />
                             </div>
                             <div
