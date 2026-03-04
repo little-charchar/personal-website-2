@@ -369,7 +369,7 @@ export default function Home() {
                       behavior: "smooth",
                     });
                   }}
-                  className={`font-display text-4xl font-semibold leading-tight sm:text-5xl focus:outline-none ${
+                  className={`font-pixel text-2xl sm:text-3xl font-semibold leading-tight focus:outline-none ${
                       hasEntered
                           ? "text-[color:var(--foreground)]"
                           : "text-white/90 hover:text-white hero-name-pulse"
