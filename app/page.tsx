@@ -442,7 +442,8 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="relative w-full mt-16"> {/* Added margin-top to push down */}
+            <div className="hidden [@media(min-width:771px)]:block relative w-full mt-16">
+              {/* Bunny head */}
               <div
                   className="absolute left-1/2 -translate-x-1/2 w-160 h-100 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20"
                   style={{
@@ -456,12 +457,11 @@ export default function Home() {
                   onClick={() => handleEarInteraction('left')}
                   onMouseEnter={() => setWavingEar('left')}
                   onMouseLeave={() => setWavingEar(null)}
-                  className="absolute w-50 h-120 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20 origin-bottom cursor-pointer transition-all"
+                  className="absolute w-50 h-120 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20 origin-bottom cursor-pointer transition-all left-[calc(50%-20%)] md:left-[calc(50%-30%)]"
                   style={{
-                    left: 'calc(50% - 25%)',
-                    bottom: '1vh',
+                    bottom: '-2vh',
                     transform: `
-                      rotate(${wavingEar === 'left' ? -10 - waveProgress * 5 : -10}deg)
+                      rotate(${wavingEar === 'left' ? -10 - waveProgress * 5 : -15}deg)
                       translateY(${Math.sin(Date.now() * 0.001 + 1) * 5}px)
                       scaleX(${wavingEar === 'left' ? 1 + waveProgress * 0.1 : 1})
                     `,
@@ -474,19 +474,17 @@ export default function Home() {
                   onClick={() => handleEarInteraction('right')}
                   onMouseEnter={() => setWavingEar('right')}
                   onMouseLeave={() => setWavingEar(null)}
-                  className="absolute w-50 h-120 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20 origin-bottom cursor-pointer transition-all"
+                  className="absolute w-50 h-120 bg-[#ff69b4] rounded-t-full rounded-b-none filter blur-3xl opacity-20 origin-bottom cursor-pointer transition-all right-[calc(50%-20%)] md:right-[calc(50%-35%)]"
                   style={{
-                    right: 'calc(50% - 25%)',
-                    bottom: '1vh',
+                    bottom: '-2vh',
                     transform: `
-                      rotate(${wavingEar === 'right' ? 10 + waveProgress * 5 : 10}deg)
+                      rotate(${wavingEar === 'right' ? 10 + waveProgress * 5 : 15}deg)
                       translateY(${Math.cos(Date.now() * 0.001 + 1) * 5}px)
                       scaleX(${wavingEar === 'right' ? 1 + waveProgress * 0.1 : 1})
                     `,
                     transition: wavingEar ? 'transform 0.1s' : 'none'
                   }}
               />
-
             </div>
           </header>
 
