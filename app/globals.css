@@ -15,7 +15,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-pixel: var(--font-pixel);
 }
@@ -40,10 +39,6 @@ body {
   backdrop-filter: blur(12px);
   color: var(--foreground);
   font-family: var(--font-body), "Segoe UI", sans-serif;
-}
-
-.font-display {
-  font-family: var(--font-display), "Times New Roman", serif;
 }
 
 ::selection {
@@ -170,7 +165,7 @@ body {
   text-rendering: optimizeSpeed;
 }
 
-.font-display, .font-body {
+.font-body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

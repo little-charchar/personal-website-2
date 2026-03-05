@@ -123,7 +123,7 @@ const volunteering = [
   },
   {
     organization: "The Hospital for Sick Children",
-    role: "Children’s Council Member",
+    role: "Children’s Council Chair & Member",
     date: "Sep 2015 - Jun 2023 · 7 yrs 10 mos",
     link: "https://www.sickkids.ca/en/patients-visitors/office-of-engagement/patient-advisory-council/",
   },
@@ -534,7 +534,7 @@ export default function Home() {
                               </div>
                             </div>
 
-                            <p className="text-xs font-mono text-[#4a2a36] bg-[#ff69b4]/5 px-3 py-1 rounded-full">
+                            <p className="text-xs font-body text-[#d44c7a] bg-[#ff69b4]/5 px-3 py-1 rounded-full">
                               {role.date}
                             </p>
                           </div>
@@ -591,7 +591,7 @@ export default function Home() {
                               <p className="text-sm text-[#4a2a36] mt-0.5">
                                 {item.organization}
                               </p>
-                              <p className="text-xs font-mono text-[#d44c7a] mt-2 bg-[#ff69b4]/5 px-3 py-1 rounded-full inline-block">
+                              <p className="text-xs font-body text-[#d44c7a] mt-2 bg-[#ff69b4]/5 px-3 py-1 rounded-full inline-block">
                                 {item.date.split("·")[0].trim()}
                               </p>
                             </div>
@@ -622,10 +622,10 @@ export default function Home() {
                     </p>
 
                     <div className="flex flex-wrap gap-2 mt-4">
-                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#ff69b4]/10 text-[#d44c7a]">
+                      <span className="text-xs font-body px-3 py-1 rounded-full bg-[#ff69b4]/10 text-[#d44c7a]">
                         {education.date}
                       </span>
-                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#ff69b4]/10 text-[#d44c7a]">
+                      <span className="text-xs font-body px-3 py-1 rounded-full bg-[#ff69b4]/10 text-[#d44c7a]">
                         {education.distinction}
                       </span>
                     </div>

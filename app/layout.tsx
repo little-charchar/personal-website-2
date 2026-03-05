@@ -2,11 +2,6 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope , Space_Grotesk, Inter, Press_Start_2P} from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
-
 const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
@@ -33,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${manrope.variable} ${pressStart2P.variable}`}
+      <body className={`${manrope.variable} ${pressStart2P.variable}`}
             suppressHydrationWarning={true}>
         {children}
       </body>
